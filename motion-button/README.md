@@ -1,75 +1,14 @@
-# React + TypeScript + Vite
+# Stateful Motion Button
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready interactive button component built with React, TypeScript, Framer Motion, and Tailwind CSS. It replaces abrupt state switches with intentional motion choreography to communicate user actions clearly at every stage of the lifecycle.
 
-Currently, two official plugins are available:
+## Features & Lifecycle
+* **5 Distinct States:** Handles `idle`, `hover`/`focus`, `loading`, `success`, and `error` gracefully.
+* **Interruptible Architecture:** Prevents redundant multi-clicks during active loading states.
+* **Accessibility First:** Fully keyboard accessible with visible focus rings (`focus-visible`) and complete support for `prefers-reduced-motion` (instantaneous transitions, no motion sickness triggers).
+* **High Performance:** Strictly animates compositor-friendly properties (`transform` and `opacity`) to eliminate layout thrashing and maintain a smooth 60fps experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+## Duration & Easing Rationale
+* **State Transitions (250ms, `cubic-bezier(0.4, 0, 0.2, 1)`):** Fast enough to feel instantaneous and responsive, yet unhurried enough for the eye to register the state morph smoothly.
+* **Success State (Spring: `stiffness: 400`, `damping: 25`):** Delivers a tactile, rewarding micro-interaction through a subtle overshoot bounce upon successful completion.
+* **Error State (Shake keyframes with `0.4s` duration):** Captures user attention immediately without relying on disruptive layout shifts.
